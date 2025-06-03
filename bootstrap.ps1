@@ -12,10 +12,9 @@ if (-not $PROFILE) {
 }
 $profilePath = Split-Path -Path $PROFILE -Parent
 $backupPath = "$profilePath.bak"
+New-Item -ItemType Directory -Path $backupPath -Force | Out-Null
 # Only backup .ps1 files
-Get-ChildItem -Path . -Filter *.ps1 -Recurse | ForEach-Object {
-    Copy-Item $_.FullName -Destination "$($_.FullName).bak" -Force
-}
+Copy-Item -Path "$profilePath\*.ps1" -Destination $backupPath -Force -ErrorAction SilentlyContinue
 Write-Host "Backup of PowerShell profile created at: $backupPath" -ForegroundColor Yellow
 
 # Copy .ps1 files to the profile directory
