@@ -31,3 +31,10 @@ if (Test-Path $PROFILE) {
     Remove-Variable backupPath -ErrorAction SilentlyContinue
     exitWithError "Profile not found after copying scripts."
 }
+
+# Configure Starship theme
+$starshipConfigPath = "$HOME\.config"
+if (-not (Test-Path $starshipConfigPath)) {
+    New-Item -ItemType Directory -Path $starshipConfigPath -Force | Out-Null
+}
+Copy-Item -Path ".\starship.toml" -Destination $starshipConfigPath -Force
